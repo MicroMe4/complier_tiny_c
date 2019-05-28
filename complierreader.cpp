@@ -1,18 +1,27 @@
 #include "complierreader.h"
 #include <QDebug>
-
-ComplierReader::ComplierReader(std::string filename)
+#include <QException>
+ComplierReader::ComplierReader(const QString &filename)
 {
     if(this->readFile.isOpen()){
         qDebug() << "Something is wrong here. new Object can read in no way!";
         this->readFile.close();
     }
-    this->readFile.setFileName(QString(filename.c_str()));
-    this->readFile.open(QIODevice::ReadOnly);
+    this->readFile.setFileName(filename);
+    if(this->readFile.exists()){
+        this->readFile.open(QIODevice::ReadOnly);
+    }
+    else{
+        qDebug() << "Invalid File";
+        throw QException();
+    }
 }
 
 ComplierReader::~ComplierReader(){
-    this->readFile.close();
+    if(this->readFile.isOpen()){
+        this->readFile.close();
+    }
+    deleteLater();
 }
 
 QStringList ComplierReader::getReadContentinList(){

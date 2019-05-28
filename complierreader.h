@@ -2,12 +2,11 @@
 #define COMPLIERREADER_H
 #include <QFile>
 #include <QString>
-#include <QIODevice>
 
-class ComplierReader
+class ComplierReader:public QObject
 {
 public:
-    ComplierReader(std::string filename);
+    ComplierReader(const QString& filename);
     ~ComplierReader();
     QStringList getReadContentinList();
     QString getReadContent();
