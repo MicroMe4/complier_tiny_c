@@ -208,7 +208,10 @@ bool TokenInstance::isTokenNumberIDentifer(const quint32 &id){
 }
 
 quint32 TokenInstance::getCodeofToken(const QString &c,bool isConstantString ){
-    if(this->_Instance.find(c)!=this->_Instance.end()){
+    if (isConstantString){
+        return ConstStrCode;
+    }
+    else if(this->_Instance.find(c)!=this->_Instance.end()){
         return this->_Instance.find(c).value();
     }
     else if(this->isIdentifier(c)){
@@ -216,9 +219,6 @@ quint32 TokenInstance::getCodeofToken(const QString &c,bool isConstantString ){
     }
     else if(this->isRealNumber(c)){
         return ConstantNumericCode;
-    }
-    else if(isConstantString){
-        return ConstStrCode;
     }
     else return UnknownToken;
 }

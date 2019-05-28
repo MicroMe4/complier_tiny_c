@@ -17,6 +17,36 @@ ComplierReader::ComplierReader(const QString &filename)
     }
 }
 
+ComplierReader::ComplierReader(const char* fn){
+    if(this->readFile.isOpen()){
+        qDebug() << "Something is wrong here. new Object can read in no way!";
+        this->readFile.close();
+    }
+    this->readFile.setFileName(fn);
+    if(this->readFile.exists()){
+        this->readFile.open(QIODevice::ReadOnly);
+    }
+    else{
+        qDebug() << "Invalid File";
+        throw QException();
+    }
+}
+
+ComplierReader::ComplierReader(const std::string &fn){
+    if(this->readFile.isOpen()){
+        qDebug() << "Something is wrong here. new Object can read in no way!";
+        this->readFile.close();
+    }
+    this->readFile.setFileName(fn.c_str());
+    if(this->readFile.exists()){
+        this->readFile.open(QIODevice::ReadOnly);
+    }
+    else{
+        qDebug() << "Invalid File";
+        throw QException();
+    }
+}
+
 ComplierReader::~ComplierReader(){
     if(this->readFile.isOpen()){
         this->readFile.close();

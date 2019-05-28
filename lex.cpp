@@ -26,7 +26,7 @@ Lex::Lex(const QString &p)
     }
     preProcessedString.remove("\r").remove("\n");
     this->LexQString=preProcessedString;
-    qDebug() << preProcessedString;
+    //qDebug() << preProcessedString;
 }
 
 Lex::Lex(const QStringList &l){
@@ -91,7 +91,7 @@ void Lex::analyze(){
                 c++;
             }
             else if(READ_TYPE & READ_TYPE_OP_DE){
-                this->printLexResultInWord(midvalue);
+                //this->printLexResultInWord(midvalue);
                 this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                 midvalue.clear();
                 READ_TYPE=READ_TYPE_NULL;
@@ -119,7 +119,7 @@ void Lex::analyze(){
                 c++;
             }
             else if(READ_TYPE & READ_TYPE_OP_DE){
-                this->printLexResultInWord(midvalue);
+                //this->printLexResultInWord(midvalue);
                 this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                 midvalue.clear();
                 READ_TYPE = READ_TYPE_NULL;
@@ -168,7 +168,7 @@ void Lex::analyze(){
                     c++;
                 }
                 else{
-                    this->printLexResultInWord(midvalue);
+                    //this->printLexResultInWord(midvalue);
                     this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                     midvalue.clear();
                     READ_TYPE = READ_TYPE_NULL;
@@ -180,7 +180,7 @@ void Lex::analyze(){
                     this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                     midvalue.clear();
                     midvalue.append(*c);
-                    this->printLexResultInWord(midvalue);
+                    //this->printLexResultInWord(midvalue);
                     this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                     midvalue.clear();
                     //qDebug() << "转换为 STR";
@@ -192,7 +192,7 @@ void Lex::analyze(){
                     c++;
                 }
                 else{
-                    this->printLexResultInWord(midvalue);
+                    //this->printLexResultInWord(midvalue);
                     this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                     midvalue.clear();
                     READ_TYPE = READ_TYPE_NULL;
@@ -204,11 +204,11 @@ void Lex::analyze(){
                     c+=2;
                 }
                 else if(((*c)=='\'') or ((*c)=='\"')){
-                   this->printLexResultInWord(midvalue,true);
+                   //this->printLexResultInWord(midvalue,true);
                    this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue,true),midvalue));
                    midvalue.clear();
                    midvalue.push_back(*c);
-                   this->printLexResultInWord(midvalue);
+                   //this->printLexResultInWord(midvalue);
                    this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                    midvalue.clear();
                    //qDebug() << "转换为 NULL";
@@ -218,7 +218,7 @@ void Lex::analyze(){
             }
             else if(READ_TYPE & READ_TYPE_ERROR_LEXICAL_IDENTIFER){
                 if((*c!='_')){
-                    this->printLexResultInWord(midvalue);
+                    //this->printLexResultInWord(midvalue);
                     this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                     midvalue.clear();
                     READ_TYPE=READ_TYPE_NULL;
@@ -234,7 +234,7 @@ void Lex::analyze(){
                     c++;
                 }
                 else {
-                    this->printLexResultInWord(midvalue);
+                    //this->printLexResultInWord(midvalue);
                     this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                     midvalue.clear();
                     READ_TYPE=READ_TYPE_NULL;
@@ -244,7 +244,7 @@ void Lex::analyze(){
         }
         else if(c->isSpace()){
             if(!(READ_TYPE & READ_TYPE_STR)){
-                this->printLexResultInWord(midvalue);
+                //this->printLexResultInWord(midvalue);
                 this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
                 midvalue.clear();
                 READ_TYPE = READ_TYPE_NULL;
@@ -264,10 +264,11 @@ void Lex::analyze(){
         }
     }
     if(!midvalue.isEmpty()){
-        this->printLexResultInWord(midvalue);
+        //this->printLexResultInWord(midvalue);
         this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
         midvalue.clear();
     }
+    return;
 }
 
 QString Lex::getTypeName(const quint32 &TYPE_ID){
