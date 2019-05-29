@@ -207,7 +207,7 @@ bool TokenInstance::isTokenNumberIDentifer(const quint32 &id){
     return id == GeneralizeIdentiferEdge;
 }
 
-quint32 TokenInstance::getCodeofToken(const QString &c,bool isConstantString ){
+quint32 TokenInstance::getCodeofToken(const QString &c,const bool &isConstantString ){
     if (isConstantString){
         return ConstStrCode;
     }

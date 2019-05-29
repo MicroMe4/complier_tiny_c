@@ -23,7 +23,7 @@ public:
     static bool isTokenNumberOperator(const quint32 &op);
     static bool isTokenNumberIDentifer(const quint32 &id);
     void doAssigntoToken(const QString &strAssign,const quint32 &tk);
-    quint32 getCodeofToken(const QString&,bool isConstantString=false);
+    quint32 getCodeofToken(const QString&,const bool &isConstantString=false);
     const static quint32 ConstantNumericCode=0x60000001;
     const static quint32 ConstStrCode=0xB0000001;
     const static quint32 UnknownToken = 0xF0000001;

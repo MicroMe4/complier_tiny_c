@@ -68,6 +68,9 @@ void Lex::setToken(TokenInstance * newInst){
 }
 
 void Lex::analyze(){
+    if(this->Inst == nullptr){
+        qDebug() << "没有指定Token列表";
+    }
     QString midvalue=nullptr;
     qint32 READ_TYPE;
     READ_TYPE=READ_TYPE_NULL;
