@@ -12,6 +12,8 @@
 #define READ_TYPE_OP_DE 0x00000040
 #define READ_TYPE_STR 0x00000080
 
+typedef QList<std::tuple<quint32,QString>> LexList;
+
 class Lex
 {
 public:
@@ -22,6 +24,10 @@ public:
     void setToken(TokenInstance *);
     static QString getTypeName(const quint32 &TYPE_ID);
     const QList<std::tuple<quint32,QString>>& getLexList();
+    bool operator==(const Lex& a){
+        return (this->finalLexial == a.finalLexial) and (this->Inst == a.Inst);
+    }
+    void goThroughToMoveUnneeded();
 private:
     TokenInstance *Inst;
     void printLexResultInWord(QString &r,const bool &isConstantString = false); //for Debug Only

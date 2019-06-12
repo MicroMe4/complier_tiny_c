@@ -16,6 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
+    parser.cpp \
+    tokenoperationer.cpp \
     tokens.cpp \
     complierreader.cpp \
     lex.cpp
@@ -26,6 +28,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    parser.h \
+    tokenoperationer.h \
     tokens.h \
     complierreader.h \
     lex.h

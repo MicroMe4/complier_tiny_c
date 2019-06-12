@@ -2,6 +2,9 @@
 #include <QtDebug>
 #include "complierreader.h"
 #include "lex.h"
+#include "tokenoperationer.h"
+#include "parser.h"
+
 void showHelp(const QString& Appname){
     qDebug() << "Lexical Solver帮助：";
     qDebug() << Appname << " /AnalysisFilename:yourfilename [/Option:[showOption]]";
@@ -68,27 +71,33 @@ int main(int argc, char *argv[])
     Lex d(cread.getReadContent());
     d.setToken(&tkin);
     d.analyze();
+    TokenOperationer tkop(d.getLexList());
+    Parser p(&tkin,&tkop);
     QList<std::tuple<quint32,QString>> tp = d.getLexList();
     for(auto c = tp.begin(); c!= tp.end(); c++){
-        if(TokenInstance::isTokenNumberKeywork(std::get<0>(*c)) and isShowKeyword){
-            qDebug() << "Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
+        if(tkin.isAnyKeyword(std::get<0>(*c)) and isShowKeyword){
+            qDebug() << c - tp.begin() << ":Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
         }
-        else if(TokenInstance::isTokenNumberOperator(std::get<0>(*c)) and isShowOperator){
-            qDebug() << "Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
+        else if(tkin.isAnyOperator(std::get<0>(*c)) and isShowOperator){
+            qDebug() << c - tp.begin() << ":Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
         }
-        else if(TokenInstance::isTokenNumberIDentifer(std::get<0>(*c)) and  isShowIdentifer){
-            qDebug() << "Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
+        else if(tkin.isIdentifierToken(std::get<0>(*c)) and  isShowIdentifer){
+            qDebug() << c - tp.begin() << ":Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
         }
-        else if(std::get<0>(*c) == TokenInstance::ConstStrCode and isShowString){
-            qDebug() << "Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
+        else if(tkin.isConstantStringToken(std::get<0>(*c)) and isShowString){
+            //else if(std::get<0>(*c) == TokenInstance::ConstStrCode and isShowString){
+            qDebug() << c - tp.begin() << ":Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
         }
-        else if(std::get<0>(*c) == TokenInstance::ConstantNumericCode and isShowNumeric){
-            qDebug() << "Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
+        else if(tkin.isConstantNumericToken(std::get<0>(*c)) and isShowNumeric){
+            //else if(std::get<0>(*c) == TokenInstance::ConstantNumericCode and isShowNumeric){
+            qDebug() << c - tp.begin() << ":Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
         }
-        else if(std::get<0>(*c) == TokenInstance::UnknownToken and isShowUnknown){
-            qDebug() << "Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
+        else if(tkin.isUnknownToken(std::get<0>(*c)) and isShowUnknown){
+            //else if(std::get<0>(*c) == TokenInstance::UnknownToken and isShowUnknown){
+            qDebug() << c - tp.begin() << ":Token Code = " << std::get<0>(*c) << " Contents = " << std::get<1>(*c);
         }
     }
+    p.syntaxRecursiveDescentAnalysis();
     qDebug() << "在 Linux 下按Ctrl + C 或者 Ctrl + Z 返回";
     return a.exec();
 }

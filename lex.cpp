@@ -319,5 +319,15 @@ void Lex::printLexResultInWord(QString &r,const bool &isConstantString){
 }
 
 const QList<std::tuple<quint32,QString>>& Lex::getLexList(){
+    goThroughToMoveUnneeded();
     return this->finalLexial;
+}
+
+void Lex::goThroughToMoveUnneeded(){
+    for(auto ptr = this->finalLexial.begin(); ptr!= this->finalLexial.end(); ptr++){
+        if(std::get<1>(*ptr) == ""){
+            ptr = finalLexial.erase(ptr);
+        }
+    }
+    return;
 }

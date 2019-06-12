@@ -47,8 +47,9 @@ TokenInstance::TokenInstance()
     // else
     this->_Instance["sizeof"]=30;
     this->_Instance["return"]=31;
-    this->_Instance["include"]=32;
-    this->_Instance["define"]=33;
+    //Macro Definition Means Replacement of other words.
+    //this->_Instance["include"]=32;
+    //this->_Instance["define"]=33;
     // operator +
     this->_Instance["+"]=35;
     this->_Instance["++"]=36;
@@ -195,6 +196,7 @@ bool TokenInstance::isOperatorUseToDivide(const QChar &c){
     return false;
 }
 
+/*
 bool TokenInstance::isTokenNumberKeywork(const quint32 &kw){
     return kw < TokenInstance::EdgeKeywordOperator;
 }
@@ -206,6 +208,7 @@ bool TokenInstance::isTokenNumberOperator(const quint32 &op){
 bool TokenInstance::isTokenNumberIDentifer(const quint32 &id){
     return id == GeneralizeIdentiferEdge;
 }
+*/
 
 quint32 TokenInstance::getCodeofToken(const QString &c,const bool &isConstantString ){
     if (isConstantString){
@@ -225,4 +228,109 @@ quint32 TokenInstance::getCodeofToken(const QString &c,const bool &isConstantStr
 
 void TokenInstance::doAssigntoToken(const QString &strAssign,const quint32& tokenID){
     this->_Instance[strAssign]=tokenID;
+}
+
+bool TokenInstance::isTokenSelfOperatorAfter(const quint32& code){
+    return (code == 36) or (code == 39);
+}
+
+bool TokenInstance::isTokenSelfOperatorBefore(const quint32& code){
+    return (code == 55);
+}
+
+bool TokenInstance::isTokenBoolOperator(const quint32 &code){
+    return (code == 55) or (code == 61) or (code ==62) or (code == 63) or (code == 64) or (code == 65) or (code == 66);
+}
+
+bool TokenInstance::isTokenBlockBeginOperator(const quint32 &code){
+    return (code == 80);
+}
+
+bool TokenInstance::isTokenBlockEndOperator(const quint32 &code){
+    return (code == 81);
+}
+
+bool TokenInstance::isTokenDataType(const quint32 &code){
+    return code <= 9;
+}
+
+bool TokenInstance::isTokenDataTypeNotVoid(const quint32 &code){
+    return code <= 8;
+}
+
+bool TokenInstance::isEndStatementToken(const quint32 &code){
+    return code == 72;
+}
+
+bool TokenInstance::isLeftBracket(const quint32 &code){
+    return code == 78;
+}
+
+bool TokenInstance::isRightBracket(const quint32 &code){
+    return code == 79;
+}
+
+bool TokenInstance::isLeftParentheses(const quint32 &code){
+    return code == 82;
+}
+
+bool TokenInstance::isRightParentheses(const quint32 &code){
+    return code == 83;
+}
+
+bool TokenInstance::isAssignValue(const quint32 &code){
+    return code == 58;
+}
+
+bool TokenInstance::isForKeyword(const quint32 &code){
+    return code == 16;
+}
+
+bool TokenInstance::isIfKeyword(const quint32 &code){
+    return code == 24;
+}
+
+bool TokenInstance::isWhileKeyword(const quint32 &code){
+    return code == 18;
+}
+
+bool TokenInstance::isSplitter(const quint32 &code){
+    return code == 68;
+}
+
+bool TokenInstance::isQuote(const quint32 &code){
+    return code == 69;
+}
+
+bool TokenInstance::isReturnKeyword(const quint32 &code){
+    return code == 31;
+}
+
+bool TokenInstance::isBinaryCaculator(const quint32 &code){
+    return (code == 35) or (code == 37) or (code == 38) or (code == 40)
+           or ((code >= 41) and (code <= 54)) or (code == 56) or (code == 57);
+}
+
+bool TokenInstance::isConstantStringToken(const quint32 &code){
+    return code == ConstStrCode;
+}
+
+bool TokenInstance::isConstantNumericToken(const quint32 &code){
+    return code == ConstantNumericCode;
+}
+
+bool TokenInstance::isIdentifierToken(const quint32 &code){
+    return code == GeneralizeIdentiferEdge;
+}
+
+bool TokenInstance::isUnknownToken(const quint32 &code){
+    return code == UnknownToken;
+}
+
+bool TokenInstance::isAnyKeyword(const quint32 &code){
+    return code < EdgeKeywordOperator;
+}
+
+bool TokenInstance::isAnyOperator(const quint32 &code){
+    return code > EdgeKeywordOperator and code < EdgeOperatorRemain;
 }
