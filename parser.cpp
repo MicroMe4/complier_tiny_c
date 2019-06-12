@@ -3,11 +3,11 @@
 /* For Parser:
  *  Program -> Main_Type Identifier() block
  *  Main_Type -> Token 0 - 9
- *  Block -> { Stmts return identifier/num }
+ *  Block -> { Stmts }
  *  Decl -> Type Array
  *  Array -> Id [num] | Id [Id] | Id
  *  Stmts -> Stmt Stmts | Stmt
- *  Stmts -> Assign | Decl | while (Bool) | if (Bool) | (Empty)
+ *  Stmt -> Assign | Decl | while (Bool) | if (Bool) | (Empty)
  */
 
 Parser::Parser(){
@@ -107,7 +107,7 @@ void Parser::_rda_analysis_statement(){
         //qDebug() << "Identifier!";
         tkp->nextToken();
         if(tka->isLeftParentheses(tkp->getTokenCode())){
-            qDebug() << "Now Doing Function Analyse...";
+            //qDebug() << "Now Doing Function Analyse...";
             // Custom Functions
             tkp->beforeToken();
             tkp->beforeToken();
@@ -140,17 +140,18 @@ void Parser::_rda_analysis_statement(){
     }
     tkp->nextToken();
     if(tka->isEndStatementToken(tkp->getTokenCode())){
-        qDebug() << "Statement Analyze Complete. No Grammer Mistake Found. Now Token Position is at " << tkp->getPosition();
+        //qDebug() << "Statement Analyze Complete. No Grammer Mistake Found. Now Token Position is at " << tkp->getPosition();
         return;
     }
     else if(tka->isTokenBlockEndOperator(tkp->getTokenCode())){
         return;
     }
     else{
-        qDebug() << "Statement Analyse Failed! We will end the analyse of this statement. Grammer Run Between Token No. "<< tkp->getPosition() - 1  << " and "<< tkp->getPosition();
+        qDebug() << "Statement Analyse Failed! We will end the analyse of this statement. Grammer Find Mistakes Between Token No. "<< tkp->getPosition() - 1  << " and "<< tkp->getPosition();
         while(!tka->isEndStatementToken(tkp->getTokenCode())){
             tkp->nextToken();
         }
+        qDebug() << "Start another statement check in " << tkp->getPosition();
     }
 }
 
@@ -190,7 +191,7 @@ void Parser::_rda_analysis_self_function(){
                     tkp->nextToken();
                     //qDebug() << "Token Infomation: Code = " << tkp->getTokenCode() << " String =" << tkp->getTokenString();
                     if(tka->isConstantStringToken(tkp->getTokenCode())){
-                        qDebug() << "Parameter :" << tkp->getTokenString();
+                        //qDebug() << "Parameter :" << tkp->getTokenString();
                         tkp->nextToken();
                         if(tka->isQuote(tkp->getTokenCode())){
                             tkp->nextToken();

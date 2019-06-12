@@ -6,8 +6,8 @@
 #include "parser.h"
 
 void showHelp(const QString& Appname){
-    qDebug() << "Lexical Solver帮助：";
-    qDebug() << Appname << " /AnalysisFilename:yourfilename [/Option:[showOption]]";
+    qDebug() << "Lexical and Parser Solver帮助：";
+    qDebug() << Appname << " /AnalysisFilename:yourfilename [/LexOption:[showOption]]";
     qDebug() << "/AnalysisFilename: 后跟读取的文件名称";
     qDebug() << "/Option: 后跟数字：";
     qDebug() << "Show Unknown Token = 1";
@@ -50,10 +50,10 @@ int main(int argc, char *argv[])
             qDebug() << "参数错误。";
             return -2;
         }
-        if(a.arguments().at(1).contains("/Option:")){
+        if(a.arguments().at(1).contains("/LexOption:")){
             filename = a.arguments().at(1).split(":").at(1);
         }
-        else if(a.arguments().at(2).contains("/Option:")){
+        else if(a.arguments().at(2).contains("/LexOption:")){
             Show = a.arguments().at(2).split(":").at(1).toUInt();
         }
         else{
@@ -98,6 +98,6 @@ int main(int argc, char *argv[])
         }
     }
     p.syntaxRecursiveDescentAnalysis();
-    qDebug() << "在 Linux 下按Ctrl + C 或者 Ctrl + Z 返回";
+    qDebug() << "按Ctrl + C 或者 Ctrl + Z 返回";
     return a.exec();
 }
