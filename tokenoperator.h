@@ -4,10 +4,10 @@
 #include <QString>
 #include <tuple>
 
-class TokenOperationer
+class TokenOperator
 {
 public:
-    TokenOperationer(const QList<std::tuple<quint32,QString>> lexicalList);
+    TokenOperator(const QList<std::tuple<quint32,QString>> lexicalList);
     const std::tuple<quint32,QString>& nextToken();
     const std::tuple<quint32,QString>& beforeToken();
     const std::tuple<quint32,QString>& EmptyToken();

@@ -1,12 +1,13 @@
-#include "tokenoperationer.h"
+#include "tokenoperator.h"
 #include <QDebug>
-TokenOperationer::TokenOperationer(const QList<std::tuple<quint32, QString>> lexicalList)
+
+TokenOperator::TokenOperator(const QList<std::tuple<quint32, QString>> lexicalList)
 {
     this->toklist = lexicalList;
     this->emptyTuple = std::make_tuple(0xFFFFFFFF,QString());
 }
 
-const std::tuple<quint32,QString>& TokenOperationer::nextToken(){
+const std::tuple<quint32,QString>& TokenOperator::nextToken(){
     if(this->pointer>=toklist.size()){
         return this->emptyTuple;
     }
@@ -15,7 +16,7 @@ const std::tuple<quint32,QString>& TokenOperationer::nextToken(){
     return toklist.at(pointer);
 }
 
-const std::tuple<quint32,QString>& TokenOperationer::beforeToken(){
+const std::tuple<quint32,QString>& TokenOperator::beforeToken(){
     if(this->pointer <= 0){
         return this->emptyTuple;
     }
@@ -24,30 +25,30 @@ const std::tuple<quint32,QString>& TokenOperationer::beforeToken(){
     return toklist.at(pointer);
 }
 
-const std::tuple<quint32,QString>& TokenOperationer::NowToken(){
+const std::tuple<quint32,QString>& TokenOperator::NowToken(){
     return toklist.at(pointer);
 }
 
-void TokenOperationer::resetPointer(){
-    this->pointer -= 1;
+void TokenOperator::resetPointer(){
+    this->pointer = -1;
 }
 
- const std::tuple<quint32,QString>& TokenOperationer::EmptyToken(){
+ const std::tuple<quint32,QString>& TokenOperator::EmptyToken(){
     return this->emptyTuple;
 }
 
- const quint32& TokenOperationer::getTokenCode(){
+ const quint32& TokenOperator::getTokenCode(){
      return std::get<0>(toklist.at(pointer));
  }
 
- const QString& TokenOperationer::getTokenString(){
+ const QString& TokenOperator::getTokenString(){
      return std::get<1>(toklist.at(pointer));
  }
 
- bool TokenOperationer::atEnd(){
+ bool TokenOperator::atEnd(){
      return this->pointer >= this->toklist.size() - 1;
  }
 
- const qint32& TokenOperationer::getPosition(){
+ const qint32& TokenOperator::getPosition(){
      return this->pointer;
  }

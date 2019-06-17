@@ -15,7 +15,7 @@ Parser::Parser(){
     this->tka = nullptr;
 }
 
-Parser::Parser(TokenInstance *in, TokenOperationer *op)
+Parser::Parser(TokenInstance *in, TokenOperator *op)
 {
 
     this->tkp = op;

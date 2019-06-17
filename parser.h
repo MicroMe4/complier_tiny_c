@@ -1,16 +1,16 @@
 #ifndef SYNTAX_H
 #define SYNTAX_H
 #include "lex.h"
-#include "tokenoperationer.h"
+#include "tokenoperator.h"
 class Parser
 {
 public:
     Parser();
-    Parser(TokenInstance *a, TokenOperationer *op);
+    Parser(TokenInstance *a, TokenOperator *op);
     ~Parser();
     void setTokenInstance(TokenInstance *);
     void syntaxRecursiveDescentAnalysis();
-    void setTokenOperator(TokenOperationer *);
+    void setTokenOperator(TokenOperator *);
 private:
     void _rda_analysis_programa();
     void _rda_analysis_block();
@@ -25,7 +25,7 @@ private:
     void _rda_analysis_self_function();
     void _rda_analysis_return();
     TokenInstance *tka;
-    TokenOperationer *tkp;
+    TokenOperator *tkp;
 };
 
 

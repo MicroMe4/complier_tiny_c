@@ -2,7 +2,7 @@
 #include <QtDebug>
 #include "complierreader.h"
 #include "lex.h"
-#include "tokenoperationer.h"
+#include "tokenoperator.h"
 #include "parser.h"
 
 void showHelp(const QString& Appname){
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     Lex d(cread.getReadContent());
     d.setToken(&tkin);
     d.analyze();
-    TokenOperationer tkop(d.getLexList());
+    TokenOperator tkop(d.getLexList());
     Parser p(&tkin,&tkop);
     QList<std::tuple<quint32,QString>> tp = d.getLexList();
     for(auto c = tp.begin(); c!= tp.end(); c++){
