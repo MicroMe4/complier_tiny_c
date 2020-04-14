@@ -271,6 +271,7 @@ void Lex::analyze(){
         this->finalLexial.push_back(std::make_tuple(this->Inst->getCodeofToken(midvalue),midvalue));
         midvalue.clear();
     }
+    goThroughToMoveUnneeded();
     return;
 }
 
@@ -319,7 +320,6 @@ void Lex::printLexResultInWord(QString &r,const bool &isConstantString){
 }
 
 const QList<std::tuple<quint32,QString>>& Lex::getLexList(){
-    goThroughToMoveUnneeded();
     return this->finalLexial;
 }
 
