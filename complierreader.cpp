@@ -1,6 +1,8 @@
 #include "complierreader.h"
 #include <QDebug>
 #include <QException>
+
+
 ComplierReader::ComplierReader(const QString &filename)
 {
     if(this->readFile.isOpen()){

@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     auto list = d.getLexList();
     TokenOperator tkop(list);
     QList<std::tuple<quint32,QString>> tp = d.getLexList();
-    int key = 0;
+    int key = -1;
     qDebug("请输入 1.去除注释 2.获得标识符 3、获得源代码中的种别");
     std::cin >> key;
     switch (key) {

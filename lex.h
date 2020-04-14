@@ -3,6 +3,7 @@
 #include <QString>
 #include <QList>
 #include "tokens.h"
+
 #define READ_TYPE_ERROR_LEXICAL_IDENTIFER 0x00000001
 #define READ_TYPE_ERROR_LEXICAL_NUMERIC 0x00000002
 #define READ_TYPE_NULL 0x00000004
