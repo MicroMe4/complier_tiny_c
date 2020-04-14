@@ -25,7 +25,7 @@ environment:
       suffix: mingw
       
 before_build:
-    - set vs="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build
+    - set vs="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build"
     - set PATH=%PATH%;C:\Qt\%qt%\%buildtc%\bin"
     - set QTDIR=C:\Qt\%qt%\%buildtc%
     - if "%platform%"== "amd64" call %vs%\vcvarsall.bat x64
@@ -38,12 +38,14 @@ build_script:
 after_build:
   - if "%APPVEYOR_DEPLOY%"=="true" windeployqt bin\complier_tiny_c.exe --qmldir %QTDIR%\qml
   
+  
+  
 artifacts:
   - path: bin
     
 deploy:
     provider: GitHub
-    auth_token: 29c5acc08d102539afa826c0fdb26c0ed92206ee
+    auth_token: 183bb4d650be1da439cea601566a7131e98cc4d5
     description: 'Appveyor Triggered Build'
     draft: false
     prerelease: false
