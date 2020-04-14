@@ -43,7 +43,7 @@ artifacts:
     
 deploy:
     provider: GitHub
-    auth_token: 4d1e50ba7c996aab778a500a3d24f52ebceafd2a
+    auth_token: 29c5acc08d102539afa826c0fdb26c0ed92206ee
     description: 'Appveyor Triggered Build'
     draft: false
     prerelease: false
