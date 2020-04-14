@@ -4,7 +4,7 @@ branches:
     only: 
     - master
     
-enviorment:
+environment:
     matrix:
     - name: win32
       platform: x86
