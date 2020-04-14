@@ -1,0 +1,52 @@
+version: '{build}'
+
+branches:
+    only: 
+    - master
+    
+enviorment:
+    matrix:
+    - name: win32
+      platform: x86
+      buildtc: msvc2017
+      qt: 5.12
+      suffix: msvc2017
+      
+    - name: win64
+      platform: amd64
+      buildtc: msvc2017_64
+      qt: 5.12
+      suffix: msvc2017
+    
+    - name: mingw32
+      platform: mingw
+      buildtc: mingw73_32
+      qt: 5.12
+      suffix: mingw
+      
+before_build:
+    - set vs=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build
+    - set PATH=%PATH%;C:\Qt\%qt%\%buildtc%\bin
+    - set QTDIR=C:\Qt\%qt%\%buildtc%
+    - if "%platform%"== "amd64" call %vs%\vcvarsall.bat x64
+    - if "%platform%"== "x86" call %vs%\vcvarsall.bat x86
+
+build_script:
+    - qmake
+    - nmake
+
+after_build:
+  - if "%APPVEYOR_DEPLOY%"=="true" windeployqt bin\complier_tiny_c.exe --qmldir %QTDIR%\qml
+  
+artifacts:
+  - path: bin
+    name: %qt%-%platform%
+    
+deploy:
+    provider: GitHub
+    auth_token: 4d1e50ba7c996aab778a500a3d24f52ebceafd2a
+    description: 'Appveyor Triggered Build'
+    draft: false
+    prerelease: false
+    on:
+        APPVEYOR_DEPLOY: true
