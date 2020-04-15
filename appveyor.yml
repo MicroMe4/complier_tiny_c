@@ -10,19 +10,19 @@ environment:
     - name: win32
       platform: x86
       toolchain: msvc2015
-      qt: 5.12
+      qt: 5.11.3
       toolchaintype: ms
       
     - name: win64
       platform: amd64
       toolchain: msvc2015_64
-      qt: 5.12
+      qt: 5.11.3
       toolchaintype: ms
     
     - name: mingw32
       platform: mingw
-      toolchain: mingw73_32
-      qt: 5.12
+      toolchain: mingw53_32
+      qt: 5.11.3
       toolchaintype: mw
       
 before_build:
@@ -33,7 +33,7 @@ before_build:
     - if "%platform%"=="x86"  call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
     - if "%platform%"=="amd64" call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
     - if "%platform%"=="amd64" call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
-    - if "%platform%"=="mingw" PATH=%PATH%;C:\Qt\Tools\mingw730_32
+    - if "%platform%"=="mingw" PATH=%PATH%;C:\Qt\Tools\mingw530_32
     - echo "path=%PATH%"
     
 build_script:
