@@ -4,37 +4,42 @@ branches:
     only: 
     - master
     
+    
 environment:
     matrix:
     - name: win32
       platform: x86
       toolchain: msvc2017
       qt: 5.12
+      toolchaintype: ms
       
     - name: win64
       platform: amd64
       toolchain: msvc2017_64
       qt: 5.12
+      toolchaintype: ms
     
     - name: mingw32
       platform: mingw
       toolchain: mingw73_32
+      mingwtc: mingw730_32
       qt: 5.12
+      toolchaintype: mw
       
 before_build:
-    - set vs="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build"
     - set QTDIR=C:\Qt\%qt%\%toolchain%
-    - set PATH=%PATH%;%QTDIR%\bin
-    - if "%platform%"== "amd64" call "%vs%\vcvars64.bat"
-    - if "%platform%"== "x86" call "%vs%\vcvars32.bat"
-    - echo "enviroment_vs=%vs%"
     - echo "qtdir=%QTDIR%"
+    - set PATH=%PATH%;%QTDIR%\bin
     - echo "path=%PATH%"
     - echo "platform=%platform%"
+    - if "%platform%"=="amd64"  call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+    - if "%platform%"=="x86" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+    - if "%platform%"=="mingw" PATH=%PATH%;C:\Qt\Tools\%mingwtc%\
     
 build_script:
     - qmake Complier.pro
-    - nmake
+    - if "%toolchaintype%"=="ms" nmake
+    - if "%toolchaintype%"=="mw" mingw32-make
 
 after_build:
   - if "%APPVEYOR_DEPLOY%"=="true" windeployqt bin\complier_tiny_c.exe --qmldir %QTDIR%\qml
