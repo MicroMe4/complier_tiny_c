@@ -8,31 +8,32 @@ environment:
     matrix:
     - name: win32
       platform: x86
-      buildtc: msvc2017
+      toolchain: msvc2017
       qt: 5.12
-      suffix: msvc2017
       
     - name: win64
       platform: amd64
-      buildtc: msvc2017_64
+      toolchain: msvc2017_64
       qt: 5.12
-      suffix: msvc2017
     
     - name: mingw32
       platform: mingw
-      buildtc: mingw73_32
+      toolchain: mingw73_32
       qt: 5.12
-      suffix: mingw
       
 before_build:
     - set vs="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build"
-    - set PATH=%PATH%;C:\Qt\%qt%\%buildtc%\bin"
-    - set QTDIR=C:\Qt\%qt%\%buildtc%
-    - if "%platform%"== "amd64" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-    - if "%platform%"== "x86" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
-
+    - set QTDIR=C:\Qt\%qt%\%toolchain%
+    - set PATH=%PATH%;%QTDIR%\bin
+    - if "%platform%"== "amd64" call "%vs%\vcvars64.bat"
+    - if "%platform%"== "x86" call "%vs%\vcvars32.bat"
+    - echo "enviroment_vs=%vs%"
+    - echo "qtdir=%QTDIR%"
+    - echo "path=%PATH%"
+    - echo "platform=%platform%"
+    
 build_script:
-    - qmake
+    - qmake Complier.pro
     - nmake
 
 after_build:
